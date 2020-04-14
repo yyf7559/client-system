@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="clientsystem3" />
+        <module name="clientsystem1" />
+        <module name="clientserver" />
+        <module name="clientcommon" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="clientsystem2" target="1.8" />
+      <module name="hh" target="1.8" />
+      <module name="jj" target="1.8" />
+      <module name="ll" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="clientcommon" options="-parameters" />
+      <module name="clientserver" options="-parameters" />
+      <module name="clientsystem" options="-parameters" />
+      <module name="clientsystem1" options="-parameters" />
+      <module name="clientsystem2" options="-parameters" />
+      <module name="clientsystem3" options="-parameters" />
+      <module name="hh" options="-parameters" />
+      <module name="jj" options="-parameters" />
+      <module name="ll" options="-parameters" />
+    </option>
+  </component>
+</project>

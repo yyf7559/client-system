@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mapper.UserMapper">
+    <resultMap id="UserResultMap" type="cn.entity.User">
+        <result column="id" property="id" jdbcType="INTEGER" javaType="int"/>
+        <result column="username" property="username" jdbcType="VARCHAR" javaType="string"/>
+        <result column="password" property="password" jdbcType="VARCHAR" javaType="string"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR" javaType="string"/>
+        <result column="email" property="email" jdbcType="VARCHAR" javaType="string"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+        <collection property="roles" select="selectRolesByUserId" column="id"></collection>
+    </resultMap>
+    <select id="findByUsername" resultMap="UserResultMap">
+        select * from springcloud_user where username=#{username}
+    </select>
+    <select id="selectRolesByUserId" resultType="cn.entity.Role">
+        select r.id,r.name from springcloud_user_role ur,springcloud_role r where ur.role_id=r.id and ur.user_id=#{id}
+    </select>
+</mapper>

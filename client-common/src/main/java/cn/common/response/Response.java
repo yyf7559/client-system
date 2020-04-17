@@ -1,5 +1,8 @@
 package cn.common.response;
 
+import lombok.Data;
+
+@Data
 public class Response {
     private String code;
 

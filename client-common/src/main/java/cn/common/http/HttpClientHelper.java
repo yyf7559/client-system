@@ -11,16 +11,17 @@ import org.apache.http.client.utils.HttpClientUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-
 public class HttpClientHelper {
     private HttpServletRequest request;
     public HttpClientHelper(HttpServletRequest request){
         this.request=request;
     }
 
-    public String get(String uri){
+    public Response get(String uri){
         CloseableHttpClient httpClient=null;
         CloseableHttpResponse response=null;
         try {
@@ -42,7 +43,8 @@ public class HttpClientHelper {
             //根据http状态码判断是否成功
             if(response.getStatusLine().getStatusCode()==200){
                 ObjectMapper om = new ObjectMapper();
-                return  result;
+
+                return  om.readValue(result,Response.class);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -50,6 +52,6 @@ public class HttpClientHelper {
             HttpClientUtils.closeQuietly(response);
             HttpClientUtils.closeQuietly(httpClient);
         }
-        return "error";
+        return new Response(ResponseEnum.ERROR).setResponseBody("出错啦");
     }
 }

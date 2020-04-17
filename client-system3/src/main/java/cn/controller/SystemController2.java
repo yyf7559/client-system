@@ -1,5 +1,7 @@
 package cn.controller;
 
+import cn.common.response.Response;
+import cn.common.response.ResponseEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,13 +32,5 @@ import java.util.Map;
 
 @RestController
 public class SystemController2 {
-     @GetMapping("/come/index")
-    public ModelAndView index(){
-         ModelAndView mv = new ModelAndView("/index");
-        return mv;
-     }
-    @RequestMapping("/come/clinet3/users")
-    public Authentication getUser(Authentication user){
-        return user;
-    }
+
 }

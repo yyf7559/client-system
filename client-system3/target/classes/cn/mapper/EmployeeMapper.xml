@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mapper.EmployeeMapper">
+    <select id="findDepartment" resultType="cn.entity.Department">
+        select * from Department
+    </select>
+    <select id="findEmployee" resultType="cn.entity.Employee">
+        select * from Employee
+        <where>
+            <if test="departmentId!=null">
+                and departmentId=#{departmentId}
+            </if>
+        </where>
+    </select>
+</mapper>

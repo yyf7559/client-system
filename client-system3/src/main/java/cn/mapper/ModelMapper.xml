@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mapper.ModelMapper">
+    <resultMap id="findModelInfo" type="cn.entity.PrescriptionModel">
+        <id property="id" column="id"/>
+        <result property="pNumber" column="pNumber"/>
+        <result property="pname" column="pname"/>
+        <result property="pinfo" column="pinfo"/>
+        <result property="permissions" column="permissions"/>
+        <result property="prescriptionTypeId" column="prescriptionTypeId"/>
+        <result property="createId" column="createId"/>
+        <result property="createDate" column="createDate"/>
+        <result property="createName" column="createName"/>
+        <result property="typeName" column="typeName"/>
+        <collection property="diseases" ofType="cn.entity.Disease">
+            <id property="id" column="did"/>
+            <result property="diseaseName" column="diseaseName"/>
+        </collection>
+        <collection property="prescriptionModelDetail" select="findModelDetail" column="id"/>
+        <collection property="modelCheck" select="findModelCheck" column="id"></collection>
+    </resultMap>
+    <select id="findModel" resultMap="findModelInfo">
+        SELECT pm.*,pt.tname as typeName,d.id as did,d.diseaseName as diseaseName,e.ename as createName
+FROM `prescriptionmodel` pm
+LEFT JOIN `prescriptiontype` pt ON pm.`prescriptionTypeId`=pt.id
+LEFT JOIN`prescriptionmodel_disease` md ON md.modelId=pm.id
+LEFT JOIN`employee` e ON pm.createId=e.id
+LEFT JOIN disease d ON d.id=md.disease
+<where>
+<if test="typeId!=null">
+    and pm.prescriptionTypeId=#{typeId}
+</if>
+    <if test="permissions!=null">
+        and pm.permissions=#{permissions}
+    </if>
+    <if test="number!=null">
+        and (pm.pNumber like concat("%",#{number},"%") or pm.pname like concat("%",#{number},"%"))
+    </if>
+</where>
+    </select>
+    <select id="findModelDetail" resultType="cn.entity.PrescriptionModelDetail">
+        SELECT pd.*,m.`medicineName` as medicineName,m.price as price FROM `prescriptionmodeldetail` pd,`medicine` m WHERE pd.medicineId=m.`id` AND pd.modelId=#{id}
+    </select>
+    <select id="findDisease" resultType="cn.entity.Disease">
+        select * from Disease
+    </select>
+    <select id="findAdvice" resultType="cn.entity.Advice">
+        select * from advice
+    </select>
+    <select id="findAddPrice" resultType="cn.entity.AddPrice">
+        select * from addprice
+    </select>
+    <select id="findModelCheck" resultType="cn.entity.PrescriptionModelCheck">
+        select mc.*,ck.checkName as checkName,ck.price as price from prescriptionmodel_check mc,`check` as ck where  mc.checkId=ck.id and mc.modelId=#{id}
+
+    </select>
+    <insert id="addPrice">
+        insert into prescription_addprice(id,`prescriptionId`,`addPriceId`,`number`,`price`)
+        values(null,#{prescriptionAddPrice.prescriptionId},#{prescriptionAddPrice.addPriceId},
+        #{prescriptionAddPrice.number},#{prescriptionAddPrice.price})
+    </insert>
+</mapper>

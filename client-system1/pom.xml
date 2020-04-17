@@ -16,6 +16,11 @@
             <artifactId>client-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>cn.client.system</groupId>
+            <artifactId>client-system3</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>

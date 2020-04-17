@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.mapper.CheckMapper">
+    <resultMap id="findCheckDetail" type="cn.entity.Check">
+        <id property="id" column="id"/>
+        <result property="checkName" column="checkName"/>
+        <result property="checkKindId" column="checkKindId"/>
+        <result property="unit" column="unit"/>
+        <result property="price" column="price"/>
+        <result property="part" column="part"/>
+        <result property="number" column="number"/>
+        <result property="pmark" column="pmark"/>
+        <result property="typeName" column="typeName"/>
+        <collection property="method" select="findMethod" column="id"></collection>
+    </resultMap>
+    <select id="findCheck" resultMap="findCheckDetail">
+        SELECT c.*,ck.kindName as typeName FROM `check` c,checkkind ck where c.checkKindId=ck.id
+    </select>
+    <select id="findCheckType" resultType="cn.entity.CheckType">
+        select * from `checkKind`
+    </select>
+    <select id="findMethod" resultType="cn.entity.Method">
+        SELECT md.* FROM check_method cm,method md WHERE cm.methodId=md.id AND cm.checkId=#{id}
+    </select>
+
+    <select id="findCheckByTypeId" resultMap="findCheckDetail">
+        SELECT c.*,ck.kindName as typeName FROM `check` c,checkkind ck
+        <where>
+                and c.checkKindId=ck.id
+            <if test="checkKindId!=null">
+                and c.checkKindId=#{checkKindId}
+            </if>
+            <if test="checkCode!=null">
+                and (c.checkCode like concat("%",#{checkCode},"%") or c.checkName like concat("%",#{checkCode},"%"))
+            </if>
+        </where>
+    </select>
+    <insert id="addPreCheck">
+        insert into prescription_check (id,prescriptionId,checkId,`number`,`count`,pmark)
+        values(null,#{prescriptionCheck.prescriptionId},#{prescriptionCheck.checkId},#{prescriptionCheck.number},#{prescriptionCheck.count},#{prescriptionCheck.pmark})
+    </insert>
+</mapper>

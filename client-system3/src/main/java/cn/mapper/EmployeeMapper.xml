@@ -7,7 +7,7 @@
     <select id="findEmployee" resultType="cn.entity.Employee">
         select * from Employee
         <where>
-            <if test="departmentId!=null">
+            <if test="departmentId!=null and departmentId!='null'">
                 and departmentId=#{departmentId}
             </if>
         </where>

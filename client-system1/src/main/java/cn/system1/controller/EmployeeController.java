@@ -22,7 +22,10 @@ public class EmployeeController {
     @GetMapping("/findEmployee")
     @ApiOperation(value = "根据科室查询员工信息",notes = "")
     public Response findEmployee(Integer departmentId){
-        return httpClientHelper.get(employeeUrl+"findEmployee?departmentId="+departmentId);
+        if(departmentId!=null){
+            return httpClientHelper.get(employeeUrl+"findEmployee?departmentId="+departmentId);
+        }
+        return httpClientHelper.get(employeeUrl+"findEmployee");
     }
     @GetMapping("/findDepartment")
     @ApiOperation(value = "查询所有科室",notes = "")

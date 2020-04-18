@@ -21,6 +21,7 @@ public class CheckController {
     @GetMapping("/findCheckByTypeId")
     public Response findCheckByTypeId(Integer checkTypeId,String checkCode){
         List<Check> list = checkService.findCheckByTypeId(checkTypeId,checkCode);
+        System.out.println("prescriptionId="+checkTypeId);
         if(list!=null){
             return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
         }

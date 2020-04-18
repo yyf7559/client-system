@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,10 +12,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 import javax.annotation.Resource;
 
 @Configuration
+@EnableWebSecurity(debug = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Resource
     private UserDetailsService userDetailsService;
@@ -33,25 +37,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/oauth/check_token");
+        web.ignoring().antMatchers("/oauth/check_token","favicon.ico");
     }
 
-/*    @Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.requestMatchers()
-                .antMatchers("/login","/login-error","/oauth/authorize","/oauth/token").and().authorizeRequests()
-                .antMatchers("/login").permitAll().anyRequest().authenticated();
-        http.formLogin().loginPage("/login").failureUrl("/login-error");
-        http.csrf().disable();
-    }*/
+        http.authorizeRequests().anyRequest().permitAll()
+
+                .and()
+                .httpBasic().and()
+                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);//把CSRFtoken设定到cookie;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("123456"));
     }
 }

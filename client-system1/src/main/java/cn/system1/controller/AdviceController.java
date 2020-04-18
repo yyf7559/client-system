@@ -23,8 +23,12 @@ public class AdviceController {
     @GetMapping("/addAdvice")
     @ApiOperation(value = "新增医嘱处方表")
     public Response addAdvice(PrescriptionAdvice prescriptionAdvice){
-     return httpClientHelper.get(adviceUrl+"/addAdvice?adviceId="+prescriptionAdvice.getAdviceId()+
+     return httpClientHelper.get(adviceUrl+"addAdvice?adviceId="+prescriptionAdvice.getAdviceId()+
              "&id="+prescriptionAdvice.getId()+"&prescriptionId="+prescriptionAdvice.getPrescriptionId());
     }
-
+    @GetMapping("/getAdvice")
+    @ApiOperation(value = "查询所有医嘱",notes = "")
+    public Response getAdvice(){
+        return httpClientHelper.get(adviceUrl+"getAdvice");
+    }
 }

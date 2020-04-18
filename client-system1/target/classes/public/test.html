@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="/js/jquery-1.12.4.js"></script>
+<script>
+    function ajax() {
+        let _csrf = getCookie('X-CSRF-TOKEN')
+        alert(_csrf);
+        var formData=$("form").serialize();
+        $.ajax({
+            type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': _csrf
+            },
+            xhrFields: {
+                withCredentials: true
+            },
+            url: '/call/model/add',
+            data: formData,
+            success: function (data) {
+                console.log(data);
+                $("#list").html(JSON.stringify(data));
+            },
+            error: function(xhr) {
+                alert('错误');
+                console.log(xhr);
+            }
+        })
+    }
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    }
+</script>
+<body>
+<form action="/call/model/add" method="post">
+    <input type="text" name="name"/>
+    <input type="text" name="typeId"/>
+    <button type="button" onclick="ajax()">ajax提交</button>
+</form>
+ajax数据如下
+<ul id="list"></ul>
+
+</body>
+</html>

@@ -1,6 +1,8 @@
 package cn.entity;
 
-public class AddPrice {
+import java.io.Serializable;
+
+public class AddPrice implements Serializable {
     private Integer id;
     private String aname;
     private String number;

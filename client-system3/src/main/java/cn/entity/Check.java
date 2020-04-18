@@ -1,8 +1,9 @@
 package cn.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Check {
+public class Check implements Serializable {
     private Integer id;
     private String checkName;
     private Integer checkKindId;

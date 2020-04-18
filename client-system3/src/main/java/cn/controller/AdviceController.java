@@ -2,6 +2,7 @@ package cn.controller;
 
 import cn.common.response.Response;
 import cn.common.response.ResponseEnum;
+import cn.entity.Advice;
 import cn.entity.PrescriptionAdvice;
 import cn.entity.Type;
 import cn.service.AdviceService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/come/advice")
@@ -26,9 +28,13 @@ public class AdviceController {
         }
         return new Response(ResponseEnum.ERROR).setResponseBody("添加医嘱处方出错啦!");
     }
-    @GetMapping("/type")
-    public void addAdvice(Type type){
-        System.out.println(type.getTypeName());
-    }
 
+    @GetMapping("/getAdvice")
+    public Response getAdvice(){
+        List<Advice> list = adviceService.findAdvice();
+        if(list!=null){
+            return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
+        }
+        return new Response(ResponseEnum.ERROR).setResponseBody("查询医嘱出错啦!");
+    }
 }

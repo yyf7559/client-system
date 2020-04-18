@@ -31,11 +31,6 @@ public class test1 {
     DiseaseService diseaseService;
     @Test
     public void test1(){
-        List<PrescriptionModel>list= modelMapper.findModel(1,"私人模板","1");
-        System.out.println(list.toString());
-    }
-    @Test
-    public void test3(){
         Prescription prescription = new Prescription();
         prescription.setEmployeeId(1);
         prescription.setKindId(1);
@@ -43,6 +38,11 @@ public class test1 {
         prescription.setPname("处方1");
         prescription.setId(prescriptionService.addPrescription(prescription));
         System.out.println("1111111n="+prescription.getId());
+    }
+    @Test
+    public void test3(){
+            List<PrescriptionModel> list = modelMapper.findModel(null,null,null,null,null);
+        System.out.println(list.toString());
     }
     @Test
     public void test4(){

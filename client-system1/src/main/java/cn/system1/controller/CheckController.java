@@ -31,7 +31,10 @@ public class CheckController {
     @GetMapping("/findCheckByTypeId")
     @ApiOperation(value = "根据typeID和名称或者拼音查询检查项目",notes = "")
     public Response findCheckByTypeId(Integer checkTypeId,String checkCode){
-        return httpClientHelper.get(checkUrl+"findCheckByTypeId?checkTypeId="+checkTypeId+"&checkCode="+checkCode);
+        if(checkTypeId!=null){
+            return httpClientHelper.get(checkUrl+"findCheckByTypeId?checkTypeId="+checkTypeId+"&checkCode="+checkCode);
+        }
+        return httpClientHelper.get(checkUrl+"findCheckByTypeId?checkCode="+checkCode);
     }
     @GetMapping("/addPreCheck")
     @ApiOperation(value = "新增处方检查项目",notes = "")

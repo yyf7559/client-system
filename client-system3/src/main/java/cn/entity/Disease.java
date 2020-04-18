@@ -2,8 +2,10 @@ package cn.entity;
 
 import io.swagger.annotations.ApiModel;
 
+import java.io.Serializable;
 
-public class Disease {
+
+public class Disease implements Serializable {
     private Integer id;
     private String diseaseName;
 

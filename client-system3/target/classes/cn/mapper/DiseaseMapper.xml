@@ -5,4 +5,7 @@
         insert into prescription_disease (id,prescriptionId,diseaseId)
         values(null,#{prescriptionDisease.prescriptionId},#{prescriptionDisease.diseaseId})
     </insert>
+    <select id="findDisease" resultType="cn.entity.Disease">
+        select * from Disease
+    </select>
 </mapper>

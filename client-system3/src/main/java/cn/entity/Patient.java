@@ -2,9 +2,10 @@ package cn.entity;
 
 import com.alibaba.druid.sql.visitor.functions.Char;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Patient {
+public class Patient implements Serializable {
     private Integer id;
     private String patientName;
     private String patientNo;

@@ -1,8 +1,9 @@
 package cn.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Medicine {
+public class Medicine implements Serializable {
     private Integer id;
     private Integer typeId;
     private String medicineNo;
@@ -13,7 +14,7 @@ public class Medicine {
     private float price;
     private String typeName;
     private List<Method> method;
-    private Integer prescriptionTypeId;
+    private Integer prescriptionId;
 
     @Override
     public String toString() {
@@ -27,7 +28,7 @@ public class Medicine {
                 ", stock=" + stock +
                 ", price=" + price +
                 ", typeName='" + typeName + '\'' +
-                ", prescriptionTypeId=" + prescriptionTypeId +
+                ", prescriptionTypeId=" + prescriptionId +
                 '}';
     }
 
@@ -48,11 +49,11 @@ public class Medicine {
     }
 
     public Integer getPrescriptionTypeId() {
-        return prescriptionTypeId;
+        return prescriptionId;
     }
 
     public void setPrescriptionTypeId(Integer prescriptionTypeId) {
-        this.prescriptionTypeId = prescriptionTypeId;
+        this.prescriptionId = prescriptionTypeId;
     }
 
     public Integer getId() {

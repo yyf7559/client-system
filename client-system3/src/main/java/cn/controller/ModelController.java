@@ -22,36 +22,15 @@ public class ModelController {
     @Resource
     ModelService modelService;
     @GetMapping("/getModel")
-    public Response findModel(Integer typeId,String permissions,String number,Integer pageNum){
-        List<PrescriptionModel> list = modelService.findModel(typeId,permissions,number);
-        System.out.println(list.toString());
-        PageHelper.startPage(pageNum,2);
-        PageInfo<PrescriptionModel> pageInfo = new PageInfo<>(list);
-        return new Response(ResponseEnum.SUCCESS).setResponseBody(pageInfo);
-    }
-    @GetMapping("/getDisease")
-    public Response getDisease(){
-        List<Disease> list = modelService.findDisease();
-     if(list!=null){
-         return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
-     }
-        return new Response(ResponseEnum.ERROR).setResponseBody("查询疾病出错啦!");
-    }
-    @GetMapping("/getAdvice")
-    public Response getAdvice(){
-        List<Advice> list = modelService.findAdvice();
-        if(list!=null){
-            return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
+    public Response findModel(Integer typeId,String permissions,String number,Integer pageNum,Integer pageSize){
+        List<PrescriptionModel> list = modelService.findModel(typeId,permissions,number,pageNum,pageSize);
+        PageInfo<PrescriptionModel> pageInfo=null;
+        if(pageNum!=null&&pageSize!=null){
+            PageHelper.startPage(pageNum,pageSize);
+            pageInfo = new PageInfo<>(list);
+            return new Response(ResponseEnum.SUCCESS).setResponseBody(pageInfo);
         }
-        return new Response(ResponseEnum.ERROR).setResponseBody("查询医嘱出错啦!");
-    }
-    @GetMapping("/getAddPrice")
-    public Response getAddPrice(){
-        List<AddPrice> list = modelService.findAddPrice();
-        if(list!=null){
-            return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
-        }
-        return new Response(ResponseEnum.ERROR).setResponseBody("查询附加费用出错啦!");
+        return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
     }
     @GetMapping("/addPrice")
     public Response addPrice(PrescriptionAddPrice prescriptionAddPrice){
@@ -59,7 +38,7 @@ public class ModelController {
         if(n>=0){
             return new Response(ResponseEnum.SUCCESS).setResponseBody(n);
         }
-        return new Response(ResponseEnum.ERROR).setResponseBody("新增附加费用出错啦!");
+        return new Response(ResponseEnum.ERROR).setResponseBody("添加附加费用出错啦!");
     }
 }
 

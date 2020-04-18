@@ -5,4 +5,7 @@
         insert into prescription(`pname`,`employeeId`,`patientId`,`kindId`)
          values(#{prescription.pname},#{prescription.employeeId},#{prescription.patientId},#{prescription.kindId})
     </insert>
+    <select id="findAddPrice" resultType="cn.entity.AddPrice">
+        select * from addprice
+    </select>
 </mapper>

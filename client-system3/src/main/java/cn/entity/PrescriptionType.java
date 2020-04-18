@@ -1,8 +1,9 @@
 package cn.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PrescriptionType {
+public class PrescriptionType implements Serializable {
     private Integer id;
     private String tname;
 

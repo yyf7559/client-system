@@ -74,6 +74,7 @@ public class Oauth2AuthorizationServerConfiguration extends AuthorizationServerC
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         //允许第三方应用通过表单传递client——id，client_secret来登录
-        security.allowFormAuthenticationForClients();
+        security.tokenKeyAccess("permitAll()")
+                .allowFormAuthenticationForClients();
     }
 }

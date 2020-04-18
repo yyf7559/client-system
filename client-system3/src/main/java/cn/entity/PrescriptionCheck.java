@@ -1,6 +1,8 @@
 package cn.entity;
 
-public class PrescriptionCheck {
+import java.io.Serializable;
+
+public class PrescriptionCheck implements Serializable {
     private Integer id;
     private Integer prescriptionId;
     private Integer checkId;

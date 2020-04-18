@@ -26,7 +26,12 @@ public class PrescriptionController {
     @ApiOperation(value = "新增处方表数据",notes = "")
     public Response addPrescription(Prescription prescription){
         return httpClientHelper.get(prescriptionUrl+
-                "/addPrescription?employeeId="+prescription.getEmployeeId()+
+                "addPrescription?employeeId="+prescription.getEmployeeId()+
                 "&id="+prescription.getId()+"&kindId="+prescription.getKindId()+"&patientId="+prescription.getPatientId()+"+&pname="+prescription.getPname());
+    }
+    @GetMapping("/getAddPrice")
+    @ApiOperation(value = "查询附加费用",notes = "")
+    public Response getAddPrice(){
+        return httpClientHelper.get(prescriptionUrl+"getAddPrice");
     }
 }

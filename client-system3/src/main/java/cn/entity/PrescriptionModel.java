@@ -1,9 +1,10 @@
 package cn.entity;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class PrescriptionModel {
+public class PrescriptionModel implements Serializable {
     private Integer id;
     private String pNumber;
     private String pname;

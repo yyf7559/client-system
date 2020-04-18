@@ -1,6 +1,8 @@
 package cn.entity;
 
-public class Advice {
+import java.io.Serializable;
+
+public class Advice implements Serializable {
     private Integer id;
     private String content;
 

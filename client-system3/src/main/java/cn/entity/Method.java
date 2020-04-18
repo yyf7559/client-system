@@ -1,6 +1,8 @@
 package cn.entity;
 
-public class Method {
+import java.io.Serializable;
+
+public class Method implements Serializable {
     private Integer id;
     private String methodName;
 

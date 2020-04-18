@@ -1,6 +1,8 @@
 package cn.entity;
 
-public class CheckType {
+import java.io.Serializable;
+
+public class CheckType implements Serializable {
     private Integer id;
     private String kindName;
     private String typeCode;

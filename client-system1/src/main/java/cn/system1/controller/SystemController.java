@@ -24,6 +24,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,24 +45,22 @@ public class SystemController {
     String modelUrl="http://localhost:8083/come/";
     @GetMapping("/getModel")
     @ApiOperation(value = "查询模板+详情信息",notes = "信息")
-    public Object findModel(Integer typeId,String permissions,String number){
-        return httpClientHelper.get(modelUrl+"getModel?&typeId="+typeId+"&permissions="+permissions+"&number="+number+"&pageNum=1");
+    public Object findModel(Integer typeId,String permissions,String number,Integer pageNum,Integer pageSize){
+        StringBuffer sb = new StringBuffer(modelUrl+"getModel?");
+        sb.append("permissions="+permissions+"&number"+number);
+        if(typeId!=null){
+            sb.append("&typeId="+typeId);
+        }
+        if(pageNum!=null){
+            sb.append("&pageNum="+pageNum);
+        }
+        if(pageSize!=null){
+            sb.append("&pageSize="+pageSize);
+        }
+        return httpClientHelper.get(sb.toString());
     }
-    @GetMapping("/getDisease")
-    @ApiOperation(value = "查询所有疾病",notes = "")
-    public Response findDisease(){
-        return httpClientHelper.get(modelUrl+"getDisease");
-    }
-    @GetMapping("/getAdvice")
-    @ApiOperation(value = "查询所有医嘱",notes = "")
-    public Response getAdvice(){
-        return httpClientHelper.get(modelUrl+"getAdvice");
-    }
-    @GetMapping("/getAddPrice")
-    @ApiOperation(value = "查询附加费用",notes = "")
-    public Response getAddPrice(){
-        return httpClientHelper.get(modelUrl+"getAddPrice");
-    }
+
+
     @GetMapping("/addPrice")
     @ApiOperation(value = "新增附加费用",notes = "")
     public Response addPrice(PrescriptionAddPrice prescriptionAddPrice){
@@ -72,5 +71,10 @@ public class SystemController {
                      "&addPriceId="+prescriptionAddPrice.getAddPriceId()+
                      "&number="+prescriptionAddPrice.getNumber()+
                      "&price="+prescriptionAddPrice.getPrice());
+    }
+
+    @PostMapping("/add")
+    public String add(String name,Integer typeId){
+        return "test:"+name+"+"+typeId;
     }
 }

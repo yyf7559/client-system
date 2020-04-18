@@ -11,7 +11,7 @@
         <result property="stock" column="stock"/>
         <result property="price" column="price"/>
         <result property="typeName" column="typeName"/>
-        <result property="prescriptionTypeId" column="prescriptionTypeId"/>
+        <result property="prescriptionId" column="prescriptionId"/>
         <collection property="method" select="findMethod" column="id"></collection>
     </resultMap>
     <select id="findPrescriptionType" resultType="cn.entity.PrescriptionType">
@@ -21,22 +21,39 @@
         SELECT m.*,ct.typeName as typeName from Medicine m,medicineType ct
         <where>
             and m.typeId=ct.id
-            <if test="typeId!=null">
+            <if test="typeId!=null and typeId!='null'">
                and `typeId`=#{typeId}
             </if>
-            <if test="code!=null">
+            <if test="code!=null and code!='null'">
                 and (`code` like concat("%",#{code},"%") or `medicineName` like concat("%",#{code},"%"))
             </if>
         </where>
     </select>
     <select id="findMethod" resultType="cn.entity.Method">
- SELECT m.* FROM `medicine_method` mm,`method` m WHERE m.`id`=mm.methodId AND mm.medicineId=#{id}
+ SELECT m.* FROM `medicine_method` mm,`method` m
+        <where>
+            and m.`id`=mm.methodId
+            <if test="pid!=null and pid!='null'">
+                AND mm.medicineId=#{id}
+            </if>
+        </where>
     </select>
     <select id="findMedicineByPid" resultMap="findMethodDetail">
-        SELECT m.*,ct.typeName as typeName from Medicine m,medicineType ct where m.typeId=ct.id and m.prescriptionId=#{pid}
+        SELECT m.*,ct.typeName as typeName from Medicine m,medicineType ct
+        <where>
+        and m.typeId=ct.id
+            <if test="pid!=null and pid!='null'">
+                and m.prescriptionId=#{pid}
+            </if>
+        </where>
     </select>
     <select id="findMedicineType" resultType="cn.entity.MedicineType">
-        select * from  MedicineType where prescriptionTypeId=#{pid}
+        select * from  MedicineType where
+        <where>
+            <if test="pid!=null and pid!='null'">
+                and prescriptionTypeId=#{pid}
+            </if>
+        </where>
     </select>
     <insert id="addPreDetail">
         insert into prescriptiondetail (`id`,`prescriptId`,`medicineId`,`useSize`,`methodId`,`frequency`,`days`,`count`

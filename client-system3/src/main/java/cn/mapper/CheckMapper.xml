@@ -27,10 +27,10 @@
         SELECT c.*,ck.kindName as typeName FROM `check` c,checkkind ck
         <where>
                 and c.checkKindId=ck.id
-            <if test="checkKindId!=null">
+            <if test="checkKindId!=null and checkKindId!='null'">
                 and c.checkKindId=#{checkKindId}
             </if>
-            <if test="checkCode!=null">
+            <if test="checkCode!=null and checkCode!='null'">
                 and (c.checkCode like concat("%",#{checkCode},"%") or c.checkName like concat("%",#{checkCode},"%"))
             </if>
         </where>

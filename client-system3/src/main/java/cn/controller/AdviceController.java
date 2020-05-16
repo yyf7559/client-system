@@ -3,10 +3,8 @@ package cn.controller;
 import cn.common.response.Response;
 import cn.common.response.ResponseEnum;
 import cn.entity.Advice;
-import cn.entity.PrescriptionAdvice;
-import cn.entity.Type;
+import cn.common.entity.PrescriptionAdvice;
 import cn.service.AdviceService;
-import org.bouncycastle.tsp.TSPUtil;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +17,7 @@ import java.util.List;
 public class AdviceController {
     @Resource
     AdviceService adviceService;
-    @GetMapping("/addAdvice")
+/*    @GetMapping("/addAdvice")
     public Response addAdvice(PrescriptionAdvice prescriptionAdvice){
         System.out.println("1111="+prescriptionAdvice.getPrescriptionId());
         int n=adviceService.addAdvice(prescriptionAdvice);
@@ -27,7 +25,7 @@ public class AdviceController {
             return new Response(ResponseEnum.SUCCESS).setResponseBody(n);
         }
         return new Response(ResponseEnum.ERROR).setResponseBody("添加医嘱处方出错啦!");
-    }
+    }*/
 
     @GetMapping("/getAdvice")
     public Response getAdvice(){

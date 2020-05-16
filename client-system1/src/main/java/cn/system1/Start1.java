@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableOAuth2Sso
+//@EnableOAuth2Sso
 @EnableSwagger2
 public class Start1 {
     public static void main(String[] args) {

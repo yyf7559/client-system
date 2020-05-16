@@ -1,5 +1,6 @@
 package cn.config;
 
+import cn.common.interceptor.SsoCookieWrapperInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -13,18 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new HandlerInterceptorAdapter() {
-            @Override
-            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-                String ssoCookies="";
-                Cookie[] cookies=request.getCookies();
-                for (Cookie cookie:cookies){
-                    ssoCookies+=cookie.getName()+"="+cookie.getValue()+";";
-                }
-                request.setAttribute("ssoCookies",ssoCookies);
-                return true;
-            }
-        }).addPathPatterns("/come/**");
+        registry.addInterceptor(new SsoCookieWrapperInterceptor()).addPathPatterns("/come/**");
     }
 
     @Override

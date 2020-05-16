@@ -1,8 +1,8 @@
 package cn.system1.controller;
 
+import cn.common.entity.PrescriptionDetail;
 import cn.common.http.HttpClientHelper;
 import cn.common.response.Response;
-import cn.entity.PrescriptionDetail;
 import cn.system1.excel.CreateExcel;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,54 +22,43 @@ import java.util.List;
 public class MedicineController {
     @Resource
     HttpClientHelper httpClientHelper;
-    String medicine = "http://localhost:8083/come/medicine/";
+    String medicine = "http://localhost:8084/come/medicine/";
     @GetMapping("/findMedicineByPid")
     @ApiOperation(value = "根据处方ID查询药品",notes = "")
     public Object findMedicine(Integer pid){
         if(pid!=null){
-            return httpClientHelper.get(medicine+"findMedicineByPid?pid="+pid);
+            return httpClientHelper.getForResponse(medicine+"findMedicineByPid?pid="+pid);
         }
-        return httpClientHelper.get(medicine+"findMedicineByPid");
+        return httpClientHelper.getForResponse(medicine+"findMedicineByPid");
     }
-    @GetMapping("/findPrescriptionType")
-    @ApiOperation(value = "查询处方类型",notes = "")
-    public Object findPrescriptionType(){
-        return httpClientHelper.get("http://localhost:8083/come/medicine/findPrescriptionType");
-    }
+
     @GetMapping("/findMedicine")
     @ApiOperation(value = "根据typeID和名称或者拼音查询药品信息",notes = "")
-    public Object findMedicine(Integer typeId,String code){
-        if(typeId!=null){
-            return httpClientHelper.get(medicine+"findMedicine?typeId="+typeId+"&code="+code);
+    public Object findMedicine(Integer typeId,String code,Integer page,Integer limit){
+        if(page==null||"".equals(page))page=1;
+        if(limit==null||"".equals(limit))limit=3;
+        if("".equals(code)){
+            code=null;
         }
-        return httpClientHelper.get(medicine+"findMedicine?code="+code);
+        if(typeId!=null&&typeId!=0){
+            return httpClientHelper.getForResponse(medicine+"findMedicine?typeId="+typeId+"&code="+code+"&page="+page+"&limit="+limit).getResponseBody();
+        }
+        return httpClientHelper.getForResponse(medicine+"findMedicine?code="+code+"&page="+page+"&limit="+limit).getResponseBody();
     }
     @GetMapping("/findMedicineType")
     @ApiOperation(value = "查询药品分类",notes = "")
     public Object findMedicineType(Integer pid){
         if(pid!=null){
-            return httpClientHelper.get(medicine+"findMedicineType?pid="+pid);
+            return httpClientHelper.getForResponse(medicine+"findMedicineType?pid="+pid);
         }
-        return httpClientHelper.get(medicine+"findMedicineType?");
-    }
-    @GetMapping("/addPreDetail")
-    @ApiOperation(value = "新增处方详情",notes = "")
-    public Response addPreDetail(PrescriptionDetail prescriptionDetail) {
-        return httpClientHelper.get("http://localhost:8083/come/medicine/addPreDetail?id="+prescriptionDetail.getId()
-                +"&count="+prescriptionDetail.getCount()
-                +"&days="+prescriptionDetail.getDays()
-                +"&methodId="+prescriptionDetail.getMethodId()
-                +"&frequency="+prescriptionDetail.getFrequency()
-                +"&medicineId="+prescriptionDetail.getMedicineId()
-                +"&prescriptId="+prescriptionDetail.getPrescriptId()
-                +"&useSize="+prescriptionDetail.getUseSize()
-        );
+        return httpClientHelper.getForResponse(medicine+"findMedicineType?");
     }
     @GetMapping("/report")
     public void report(HttpServletResponse response) {
         CreateExcel report = new CreateExcel();
         List<String> headList = Arrays.asList("序号","单号","药品名称","数量","采购成本");
         List<List<String>> dataList = new ArrayList<>();
+        Response response1=httpClientHelper.getForResponse(medicine+"findMedicineByPid");
         for (int i = 0; i < 10; i++) {
             dataList.add(Arrays.asList("" + i,"1000" + i,"药品" + i,"" +i, "2.55"));
         }

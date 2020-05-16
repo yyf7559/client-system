@@ -14,8 +14,8 @@ public class PatientServiceImpl implements PatientService{
     @Resource
     PatientMapper patientMapper;
     @Override
-    public List<Patient> findPatient() {
-        return patientMapper.findPatient();
+    public List<Patient> findPatient(Integer id) {
+        return patientMapper.findPatient(id);
     }
 
     @Override

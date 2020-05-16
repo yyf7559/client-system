@@ -2,7 +2,9 @@ package cn.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -10,7 +12,9 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
@@ -76,5 +80,31 @@ public class Oauth2AuthorizationServerConfiguration extends AuthorizationServerC
         //允许第三方应用通过表单传递client——id，client_secret来登录
         security.tokenKeyAccess("permitAll()")
                 .allowFormAuthenticationForClients();
+    }
+    class CustomTokenServices extends DefaultTokenServices {
+        /**
+         * 方案一 设置数据库隔离级别为串行
+         * @param authentication
+         * @return
+         * @throws AuthenticationException
+         */
+       /* @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+        @Override
+        public OAuth2AccessToken createAccessToken(
+                OAuth2Authentication authentication) throws AuthenticationException {
+            return super.createAccessToken(authentication);
+        }*/
+
+        /**
+         * 方案二 同步方法
+         * @param authentication
+         * @return
+         * @throws AuthenticationException
+         */
+        @Override
+        public synchronized OAuth2AccessToken createAccessToken(
+                OAuth2Authentication authentication) throws AuthenticationException {
+            return super.createAccessToken(authentication);
+        }
     }
 }

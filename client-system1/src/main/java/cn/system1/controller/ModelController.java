@@ -1,9 +1,10 @@
 package cn.system1.controller;
 
-import cn.common.entity.PrescriptionAddPrice;
+import cn.system1.entity.PrescriptionAddPrice;
 import cn.common.http.HttpClientHelper;
 import cn.common.response.Response;
 import cn.common.response.ResponseEnum;
+import cn.system1.service.ModelService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -38,7 +40,9 @@ import java.util.Map;
 @Api(tags = "模板信息查询")
 @RestController
 @RequestMapping("/call/model")
-public class SystemController {
+public class ModelController {
+    @Resource
+    ModelService modelService;
     private static final String CURRENT_SERVER_URL = "http://localhost:8082";
     @Autowired
     HttpClientHelper httpClientHelper;
@@ -64,25 +68,19 @@ public class SystemController {
     @GetMapping("/addPrice")
     @ApiOperation(value = "新增附加费用",notes = "")
     public Response addPrice(PrescriptionAddPrice prescriptionAddPrice){
-     return httpClientHelper
-             .getForResponse(modelUrl+"/addPrice?id="+
-                     prescriptionAddPrice.getId()+
-                     "&prescriptionId="+prescriptionAddPrice.getPrescriptionId()+
-                     "&addPriceId="+prescriptionAddPrice.getAddPriceId()+
-                     "&number="+prescriptionAddPrice.getNumber()+
-                     "&price="+prescriptionAddPrice.getPrice());
+            int n = modelService.addPrice(prescriptionAddPrice);
+            if(n>0){
+                return new Response(ResponseEnum.SUCCESS).setResponseBody(n);
+            }
+        return new Response(ResponseEnum.ERROR).setResponseBody("新增附加费用出错");
     }
 
     @PostMapping("/add")
     public String add(String name,Integer typeId){
         return "test:"+name+"+"+typeId;
     }
-
-    @GetMapping("testpost")
-    public Response testpost(){
-        Map<String ,Object>params = new HashMap<>();
-        params.put("name","张三");
-        params.put("typeId","123");
-        return httpClientHelper.postForResponse(modelUrl+"/testpost",params,CURRENT_SERVER_URL);
+    @GetMapping("/test")
+    public String test(String name,Integer typeId){
+        return "test:"+name+"+"+typeId;
     }
 }

@@ -1,6 +1,7 @@
 package cn.entity;
 
 import com.alibaba.druid.sql.visitor.functions.Char;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -10,8 +11,9 @@ public class Patient implements Serializable {
     private String patientName;
     private String patientNo;
     private Integer patientAge;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date bornDate;
-    private Char gender;
+    private String gender;
     private String phone;
     private Integer typeId;
     private String patientCard;
@@ -67,11 +69,11 @@ public class Patient implements Serializable {
         this.bornDate = bornDate;
     }
 
-    public Char getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Char gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

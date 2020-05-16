@@ -1,13 +1,10 @@
-package cn.service;
+package cn.system1.service;
 
-import cn.entity.Advice;
-import cn.common.entity.PrescriptionAdvice;
-import org.springframework.stereotype.Service;
+import cn.system1.entity.PrescriptionAdvice;
 
 import java.util.List;
 
 
 public interface AdviceService {
     public int addAdvice(PrescriptionAdvice prescriptionAdvice);//插入医嘱处方表数据
-    public List<Advice> findAdvice();
 }

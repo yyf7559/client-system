@@ -6,10 +6,10 @@
     <packaging>pom</packaging>
     <modules>
         <module>client-system1</module>
-
         <module>client-system3</module>
         <module>client-common</module>
         <module>client-server</module>
+        <module>client-medicine</module>
     </modules>
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -64,6 +64,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>

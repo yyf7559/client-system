@@ -1,7 +1,7 @@
-package cn.mapper;
+package cn.system1.mapper;
 
-import cn.entity.Disease;
-import cn.common.entity.PrescriptionDisease;
+import cn.system1.entity.PrescriptionDisease;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -9,6 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface DiseaseMapper {
-    public int addDisease(@Param("prescriptionDisease")PrescriptionDisease prescriptionDisease);//插入疾病处方表数据
-    public List<Disease> findDisease();
+    public int addDisease(@Param("prescriptionDisease") PrescriptionDisease prescriptionDisease);//插入疾病处方表数据
+
 }

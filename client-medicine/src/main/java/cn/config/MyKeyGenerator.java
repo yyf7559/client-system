@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+
 @Component
 public class MyKeyGenerator implements KeyGenerator {
     @Override

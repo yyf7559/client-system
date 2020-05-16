@@ -8,9 +8,9 @@ public class Check implements Serializable {
     private String checkName;
     private Integer checkKindId;
     private String unit;
-    private Float price;
+    private float price;
     private String part;
-    private int number;
+    private Integer number;
     private String pmark;
     private String typeName;
     private List<Method>method;
@@ -55,11 +55,11 @@ public class Check implements Serializable {
         this.unit = unit;
     }
 
-    public Float getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
@@ -71,11 +71,11 @@ public class Check implements Serializable {
         this.part = part;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

@@ -1,7 +1,7 @@
 package cn.mapper;
 
 import cn.entity.Disease;
-import cn.entity.PrescriptionDisease;
+import cn.common.entity.PrescriptionDisease;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,8 +1,8 @@
 package cn.service;
 
+import cn.common.entity.PrescriptionCheck;
 import cn.entity.Check;
 import cn.entity.CheckType;
-import cn.common.entity.PrescriptionCheck;
 import cn.mapper.CheckMapper;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +27,5 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public List<Check> findCheckByTypeId(Integer checkTypeId, String checkCode) {
         return checkMapper.findCheckByTypeId(checkTypeId,checkCode);
-    }
-
-    @Override
-    public int addPreCheck(PrescriptionCheck prescriptionCheck) {
-        return checkMapper.addPreCheck(prescriptionCheck);
     }
 }

@@ -1,10 +1,10 @@
-package cn.bdqn.his.common.interceptor;
+package cn.common.interceptor;
+
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * 单点登录后使用httpclient调用其他客户端的api需要传递cookie

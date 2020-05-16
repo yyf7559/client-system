@@ -16,6 +16,14 @@ public class Medicine implements Serializable {
     private List<Method> method;
     private Integer prescriptionId;
 
+    public Integer getPrescriptionId() {
+        return prescriptionId;
+    }
+
+    public void setPrescriptionId(Integer prescriptionId) {
+        this.prescriptionId = prescriptionId;
+    }
+
     @Override
     public String toString() {
         return "Medicine{" +

@@ -10,6 +10,7 @@
         <module name="clientsystem3" />
         <module name="clientcommon" />
         <module name="clientserver" />
+        <module name="clientmedicine" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,6 +23,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="clientcommon" options="-parameters" />
+      <module name="clientmedicine" options="-parameters" />
       <module name="clientserver" options="-parameters" />
       <module name="clientsystem" options="-parameters" />
       <module name="clientsystem1" options="-parameters" />

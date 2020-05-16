@@ -1,16 +1,16 @@
 package cn.service;
-
 import cn.entity.Medicine;
 import cn.entity.MedicineType;
-import cn.common.entity.PrescriptionDetail;
-import cn.entity.PrescriptionType;
 import cn.mapper.MedicineMapper;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
+@CacheConfig(cacheNames = "MedicineServiceImpl")
 public class MedicineServiceImpl implements MedicineService{
     @Resource
     MedicineMapper medicineMapper;
@@ -20,8 +20,9 @@ public class MedicineServiceImpl implements MedicineService{
     }
 
     @Override
-    public List<Medicine> findMedicine(Integer typeId, String code) {
-        return medicineMapper.findMedicine(typeId,code);
+    @Cacheable(key = "targetClass+':'+methodName+':'+ # typeId +':'+ # code +':' +':'+ # pageNo +':'+ # pageSize")
+    public List<Medicine> findMedicine(Integer typeId, String code,Integer pageNo,Integer pageSize) {
+        return medicineMapper.findMedicine(typeId,code,pageNo,pageSize);
     }
 
     @Override
@@ -29,13 +30,4 @@ public class MedicineServiceImpl implements MedicineService{
         return medicineMapper.findMedicineByPid(pid);
     }
 
-    @Override
-    public List<PrescriptionType> findPrescriptionType() {
-        return medicineMapper.findPrescriptionType();
-    }
-
-    @Override
-    public int addPreDetail(PrescriptionDetail prescriptionDetail) {
-        return medicineMapper.addPreDetail(prescriptionDetail);
-    }
 }

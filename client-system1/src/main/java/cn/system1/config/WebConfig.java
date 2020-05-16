@@ -1,6 +1,8 @@
 package cn.system1.config;
 
+import cn.common.interceptor.SsoCookieWrapperInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -13,27 +15,20 @@ import javax.servlet.http.HttpServletResponse;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new HandlerInterceptorAdapter() {
-            @Override
-            public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-                StringBuffer ssoCookies = new StringBuffer();
-                Cookie[] cookies = request.getCookies();
-                for (Cookie cookie : cookies) {
-                    ssoCookies
-                            .append(cookie.getName())
-                            .append("=")
-                            .append(cookie.getValue())
-                            .append(";");
-                }
-                ssoCookies.deleteCharAt(ssoCookies.length() - 1);
-                request.setAttribute("ssoCookies", ssoCookies.toString());
-                return true;
-            }
-        }).addPathPatterns("/call/**");
+        registry.addInterceptor(new SsoCookieWrapperInterceptor()).addPathPatterns("/call/**");
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/test1").setViewName("/test1");
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("*")
+                .allowedHeaders("*")
+                .maxAge(1800);
     }
 }

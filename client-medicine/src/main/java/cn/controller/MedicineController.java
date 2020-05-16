@@ -4,16 +4,17 @@ import cn.common.response.Response;
 import cn.common.response.ResponseEnum;
 import cn.entity.Medicine;
 import cn.entity.MedicineType;
-import cn.common.entity.PrescriptionDetail;
-import cn.entity.PrescriptionType;
+import cn.excel.CreateExcel;
 import cn.service.MedicineService;
-
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 @RestController
 @RequestMapping("/come/medicine")
@@ -29,35 +30,53 @@ public class MedicineController {
         return new Response(ResponseEnum.ERROR).setResponseBody("查询数据出错啦！");
     }
     @GetMapping("/findMedicine")
-    public Response findMedicine(Integer typeId,String code){
-        List<Medicine> list = medicineService.findMedicine(typeId,code);
-        if(list!=null){
-            return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
+    public Response findMedicine(Integer typeId,String code,Integer page,Integer limit){
+        List<Medicine> list = medicineService.findMedicine(typeId,code,page,limit);
+        Map<String,Object> map=new HashMap<>();
+        PageInfo<Medicine> pageInfo=null;
+        if(page!=null&&limit!=null){
+            PageHelper.startPage(page,limit);
+            pageInfo = new PageInfo<>(list);
+            map.put("data",pageInfo.getList());
+            map.put("code","0");
+            map.put("count",pageInfo.getTotal());
+            return new Response(ResponseEnum.SUCCESS).setResponseBody(map);
+        }else{
+            map.put("data",list);
+            map.put("code","0");
+            map.put("count",list.size());
+            return new Response(ResponseEnum.SUCCESS).setResponseBody(map);
         }
-        return new Response(ResponseEnum.ERROR).setResponseBody("查询数据出错啦！");
     }
     @GetMapping("/findMedicineByPid")
-    public Response findMedicineByPid(Integer pid){
+    public Response findMedicineByPid(Integer pid,Integer pageNo,Integer pageSize){
         List<Medicine> list = medicineService.findMedicineByPid(pid);
-        if(list!=null){
-            return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
+        Map<String,Object> map=new HashMap<>();
+        PageInfo<Medicine> pageInfo=null;
+        if(pageNo!=null&&pageSize!=null){
+            PageHelper.startPage(pageNo,pageSize);
+            pageInfo = new PageInfo<>(list);
+            map.put("data",map);
+            map.put("code","0");
+            map.put("count",pageInfo.getTotal());
+            return new Response(ResponseEnum.SUCCESS).setResponseBody(map);
+        }else {
+            map.put("data",list);
+            map.put("code","0");
+            map.put("count",list.size());
+            return new Response(ResponseEnum.SUCCESS).setResponseBody(map);
         }
-        return new Response(ResponseEnum.ERROR).setResponseBody("查询数据出错啦！");
     }
-    @GetMapping("/findPrescriptionType")
-    public Response findPrescriptionType(){
-        List<PrescriptionType> list = medicineService.findPrescriptionType();
-        if(list!=null){
-            return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
+    @GetMapping("/report")
+    public void report(HttpServletResponse response) {
+        List<Medicine> list = medicineService.findMedicine(null,null,null,null);
+        CreateExcel report = new CreateExcel();
+        List<String> headList = Arrays.asList("序号","单号","药品名称","数量","采购成本");
+        List<List<String>> dataList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            dataList.add(Arrays.asList("" + i,"1000" + i,list.get(i).getMedicineName(),"" +list.get(i).getStock(), list.get(i).getPrice()+""));
         }
-        return new Response(ResponseEnum.ERROR).setResponseBody("查询数据出错啦！");
+        report.createWorkBook(null, "a", headList, dataList, response, "报表测试.xls");
     }
-    @GetMapping("/addPreDetail")
-    public Response addPreDetail(PrescriptionDetail prescriptionDetail){
-        int n = medicineService.addPreDetail(prescriptionDetail);
-        if(n>0){
-            return new Response(ResponseEnum.SUCCESS).setResponseBody(n);
-        }
-        return new Response(ResponseEnum.ERROR).setResponseBody("添加出错啦！");
-    }
+
 }

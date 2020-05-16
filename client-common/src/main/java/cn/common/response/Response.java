@@ -24,4 +24,11 @@ public class Response {
         this.responseBody = responseBody;
         return this;
     }
+
+    public void setCode(String s) {
+    }
+
+    public Object getResponseBody() {
+        return responseBody;
+    }
 }

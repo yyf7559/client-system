@@ -1,17 +1,19 @@
 package cn.controller;
 
+import cn.common.entity.PrescriptionAddPrice;
 import cn.common.response.Response;
 import cn.common.response.ResponseEnum;
-import cn.entity.*;
+
+import cn.entity.AddPrice;
+import cn.entity.PrescriptionModel;
+import cn.entity.PrescriptionType;
 import cn.mapper.ModelMapper;
 import cn.service.ModelService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,13 +34,25 @@ public class ModelController {
         }
         return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
     }
-    @GetMapping("/addPrice")
-    public Response addPrice(PrescriptionAddPrice prescriptionAddPrice){
-        int n = modelService.addPrice(prescriptionAddPrice);
-        if(n>=0){
-            return new Response(ResponseEnum.SUCCESS).setResponseBody(n);
+    @GetMapping("/findAddPrice")
+    public Response findAddPrice(){
+        List<AddPrice> list= modelService.findAddPrice();
+        if(list!=null){
+            return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
         }
-        return new Response(ResponseEnum.ERROR).setResponseBody("添加附加费用出错啦!");
+        return new Response(ResponseEnum.ERROR).setResponseBody("查询附加费用出错啦!");
+    }
+    @GetMapping("/findPrescriptionType")
+    public Response findPrescriptionType(){
+        List<PrescriptionType> list= modelService.findPrescriptionType();
+        if(list!=null){
+            return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
+        }
+        return new Response(ResponseEnum.ERROR).setResponseBody("查询处方类型出错啦!");
+    }
+    @RequestMapping(value = "/findBy",method = {RequestMethod.GET,RequestMethod.POST})
+    public String testpost(String name,Integer typeId){
+        return name+"="+typeId;
     }
 }
 

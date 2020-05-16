@@ -1,7 +1,7 @@
 package cn.service;
 
 import cn.entity.Disease;
-import cn.entity.PrescriptionDisease;
+import cn.common.entity.PrescriptionDisease;
 
 import java.util.List;
 

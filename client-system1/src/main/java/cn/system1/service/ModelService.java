@@ -1,12 +1,11 @@
-package cn.service;
+package cn.system1.service;
 
 
-import cn.common.entity.PrescriptionAddPrice;
-import cn.entity.PrescriptionModel;
+import cn.system1.entity.PrescriptionAddPrice;
+
 
 import java.util.List;
 
 public interface ModelService {
-    public List<PrescriptionModel> findModel(Integer typeId, String permissions, String number, Integer pageNum, Integer pageSize);
     public int addPrice(PrescriptionAddPrice prescriptionAddPrice);
 }

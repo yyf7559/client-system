@@ -27,7 +27,7 @@ LEFT JOIN`prescriptionmodel_disease` md ON md.modelId=pm.id
 LEFT JOIN`employee` e ON pm.createId=e.id
 LEFT JOIN disease d ON d.id=md.disease
 <where>
-<if test="typeId!=null and permissions!='null'">
+<if test="typeId!=null">
     and pm.prescriptionTypeId=#{typeId}
 </if>
     <if test="permissions!=null and permissions!='null'">
@@ -39,15 +39,16 @@ LEFT JOIN disease d ON d.id=md.disease
 </where>
     </select>
     <select id="findModelDetail" resultType="cn.entity.PrescriptionModelDetail">
-        SELECT pd.*,m.`medicineName` as medicineName,m.price as price FROM `prescriptionmodeldetail` pd,`medicine` m WHERE pd.medicineId=m.`id` AND pd.modelId=#{id}
+        SELECT pd.*,m.`medicineName` as medicineName,m.price as price FROM `prescriptionmodeldetail` pd,`client-medicine`.`medicine` m WHERE pd.medicineId=m.`id` AND pd.modelId=#{id}
     </select>
 
     <select id="findModelCheck" resultType="cn.entity.PrescriptionModelCheck">
-        select mc.*,ck.checkName as checkName,ck.price as price from prescriptionmodel_check mc,`check` as ck where  mc.checkId=ck.id and mc.modelId=#{id}
+        select mc.*,ck.checkName as checkName,ck.price as price from prescriptionmodel_check mc,`client-medicine`.`check` as ck where  mc.checkId=ck.id and mc.modelId=#{id}
     </select>
-    <insert id="addPrice">
-        insert into prescription_addprice(id,`prescriptionId`,`addPriceId`,`number`,`price`)
-        values(null,#{prescriptionAddPrice.prescriptionId},#{prescriptionAddPrice.addPriceId},
-        #{prescriptionAddPrice.number},#{prescriptionAddPrice.price})
-    </insert>
+    <select id="findAddPrice" resultType="cn.entity.AddPrice">
+        select * from addprice
+    </select>
+    <select id="findPrescriptionType" resultType="cn.entity.PrescriptionType">
+        select * from PrescriptionType
+    </select>
 </mapper>

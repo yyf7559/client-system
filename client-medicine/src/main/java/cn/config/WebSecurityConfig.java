@@ -1,4 +1,4 @@
-package cn.system1.config;
+package cn.config;
 
 
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
-        http.csrf().disable();
+        http.authorizeRequests().anyRequest().authenticated();
+        http.cors().and().csrf().disable();
     }
 }

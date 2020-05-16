@@ -1,8 +1,8 @@
-package cn.service;
+package cn.system1.service;
 
-import cn.entity.Disease;
-import cn.common.entity.PrescriptionDisease;
-import cn.mapper.DiseaseMapper;
+import cn.system1.entity.PrescriptionDisease;
+
+import cn.system1.mapper.DiseaseMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,10 +15,6 @@ public class DiseaseServiceImpl implements DiseaseService{
     @Override
     public int addDisease(PrescriptionDisease prescriptionDisease) {
         return diseaseMapper.addDisease(prescriptionDisease);
-    }
-    @Override
-    public List<Disease> findDisease() {
-        return diseaseMapper.findDisease();
     }
 
 }

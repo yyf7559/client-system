@@ -1,7 +1,7 @@
 package cn.service;
 
 import cn.entity.Disease;
-import cn.entity.PrescriptionDisease;
+import cn.common.entity.PrescriptionDisease;
 import cn.mapper.DiseaseMapper;
 import org.springframework.stereotype.Service;
 

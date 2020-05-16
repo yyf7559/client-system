@@ -3,6 +3,11 @@
 <mapper namespace="cn.mapper.PatientMapper">
     <select id="findPatient" resultType="cn.entity.Patient">
         select * from patient
+        <where>
+            <if test="id!=null">
+                and id=#{id}
+            </if>
+        </where>
     </select>
     <select id="findType" resultType="cn.entity.Type">
         select * from `type`

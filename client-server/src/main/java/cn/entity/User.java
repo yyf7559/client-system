@@ -34,13 +34,6 @@ public class User implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", username=" + username + ", password="
-                + password + ", phone=" + phone + ", email=" + email
-                + ", roles=" + roles + ", createTime=" + createTime + "]";
-    }
-
     public Integer getId() {
         return id;
     }

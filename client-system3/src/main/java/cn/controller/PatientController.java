@@ -18,8 +18,8 @@ public class PatientController {
     @Resource
     PatientService patientService;
     @GetMapping("/findPatient")
-    public Response findPatient(){
-        List<Patient> list = patientService.findPatient();
+    public Response findPatient(Integer id){
+        List<Patient> list = patientService.findPatient(id);
         if(list!=null){
             return new Response(ResponseEnum.SUCCESS).setResponseBody(list);
         }

@@ -1,4 +1,4 @@
-package cn.entity;
+package cn.common.entity;
 
 import java.io.Serializable;
 

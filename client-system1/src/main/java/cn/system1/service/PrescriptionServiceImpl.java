@@ -1,8 +1,9 @@
-package cn.service;
+package cn.system1.service;
 
-import cn.entity.AddPrice;
-import cn.common.entity.Prescription;
-import cn.mapper.PrescriptionMapper;
+import cn.system1.entity.Prescription;
+
+import cn.system1.entity.PrescriptionDetail;
+import cn.system1.mapper.PrescriptionMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,8 +18,7 @@ public class PrescriptionServiceImpl implements PrescriptionService{
         return prescriptionMapper.addPrescription(prescription);
     }
     @Override
-    public List<AddPrice> findAddPrice() {
-        return prescriptionMapper.findAddPrice();
+    public int addPreDetail(PrescriptionDetail prescriptionDetail) {
+        return prescriptionMapper.addPreDetail(prescriptionDetail);
     }
-
 }

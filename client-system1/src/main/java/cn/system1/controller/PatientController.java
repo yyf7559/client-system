@@ -19,12 +19,16 @@ public class PatientController {
     String patientUrl="http://localhost:8083/come/patient/";
     @GetMapping("/findPatient")
     @ApiOperation(value = "查询所有患者",notes = "")
-    public Response findCheckType(){
-        return httpClientHelper.get(patientUrl+"findPatient");
+    public Response findCheckType(Integer id){
+        if(id!=null){
+            System.out.println("接口");
+            return httpClientHelper.getForResponse(patientUrl+"findPatient?id="+id);
+        }
+        return httpClientHelper.getForResponse(patientUrl+"findPatient");
     }
     @ApiOperation(value = "查询所有患者类型",notes = "")
     @GetMapping("/findType")
     public Response findType(){
-        return httpClientHelper.get(patientUrl+"findType");
+        return httpClientHelper.getForResponse(patientUrl+"findType");
     }
 }
